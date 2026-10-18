@@ -1,0 +1,20 @@
+RASD Intelligence — دليل التشغيل السريع
+
+هذه هي النسخة الحالية للمشروع وتشمل واجهة الويب وFastAPI وسجل SQLite دائمًا.
+
+1) ثبّت Python 3.10 أو أحدث.
+2) افتح PowerShell داخل مجلد المشروع.
+3) نفّذ:
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   python -m pip install -r requirements-dev.txt
+   Copy-Item .env.example .env
+   python -m uvicorn backend.main:app --env-file .env --host 127.0.0.1 --port 8000
+4) افتح http://127.0.0.1:8000/ui
+5) لتشغيل الاختبارات في نافذة PowerShell أخرى:
+   python -m pytest -q
+
+توثيق التشغيل، الاختبارات، API، الأوزان، حدود الاستخدام، وإعداد Docker في README.md.
+الدليل العربي الكامل في README.ar.md.
+
+تنبيه: التقييم أولي وقائم على قواعد توضيحية، ولا يستخدم وحده لقرارات تشغيلية حقيقية. التشغيل الافتراضي يحفظ السجل محليًا ولا يتضمن تسجيل دخول أو صلاحيات متعددة المستخدمين، لذلك لا تعرّضه للإنترنت. للعرض العام فقط، استخدم RASD_DEMO_MODE=true؛ هذا الوضع لا يحفظ تقييمات الزوار على الخادم.

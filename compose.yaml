@@ -1,0 +1,14 @@
+services:
+  rasd:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      RASD_DATABASE_PATH: /app/data/rasd.sqlite3
+      RASD_CORS_ORIGINS: http://127.0.0.1:5500,http://localhost:5500
+    volumes:
+      - rasd-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  rasd-data:
