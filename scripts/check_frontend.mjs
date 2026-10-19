@@ -3,8 +3,11 @@ import { readFile } from "node:fs/promises";
 import vm from "node:vm";
 
 const html = await readFile(new URL("../frontend/index.html", import.meta.url), "utf8");
+const favicon = await readFile(new URL("../frontend/favicon.svg", import.meta.url), "utf8");
 const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/i);
 assert.ok(scriptMatch, "the frontend must contain its application script");
+assert.match(html, /rel="icon"[^>]+href="\/favicon\.svg"/);
+assert.match(favicon, /<svg\b[\s\S]*<\/svg>/);
 const script = scriptMatch[1];
 new vm.Script(script, { filename: "frontend/index.html" });
 

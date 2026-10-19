@@ -29,6 +29,10 @@ def valid_request():
 
 
 def test_health_ui_and_security_headers(client):
+    home = client.get("/", follow_redirects=False)
+    assert home.status_code == 307
+    assert home.headers["location"] == "/ui"
+
     health = client.get("/health")
     assert health.status_code == 200
     assert health.json()["status"] == "healthy"
@@ -39,6 +43,10 @@ def test_health_ui_and_security_headers(client):
     ui = client.get("/ui")
     assert ui.status_code == 200
     assert "RASD Intelligence" in ui.text
+
+    favicon = client.get("/favicon.svg")
+    assert favicon.status_code == 200
+    assert favicon.headers["content-type"].startswith("image/svg+xml")
 
     allowed = client.options(
         "/health",

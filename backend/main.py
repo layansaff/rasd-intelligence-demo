@@ -17,7 +17,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
@@ -512,15 +512,9 @@ async def add_security_headers(request, call_next):
     return response
 
 
-@app.get("/", tags=["system"])
+@app.get("/", tags=["system"], include_in_schema=False)
 def home():
-    return {
-        "name": "RASD Intelligence API",
-        "status": "running",
-        "version": APP_VERSION,
-        "docs": None if DEMO_MODE else "/docs",
-        "ui": "/ui",
-    }
+    return RedirectResponse(url="/ui", status_code=307)
 
 
 @app.get("/ui", include_in_schema=False)
@@ -529,6 +523,14 @@ def frontend():
     if not page.is_file():
         raise HTTPException(status_code=503, detail="Frontend bundle is unavailable.")
     return FileResponse(page, media_type="text/html")
+
+
+@app.get("/favicon.svg", include_in_schema=False)
+def favicon():
+    icon = PROJECT_DIR / "frontend" / "favicon.svg"
+    if not icon.is_file():
+        raise HTTPException(status_code=404, detail="Favicon is unavailable.")
+    return FileResponse(icon, media_type="image/svg+xml")
 
 
 @app.get("/health", tags=["system"], response_model=HealthResult)

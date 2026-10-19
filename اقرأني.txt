@@ -10,7 +10,7 @@ RASD Intelligence — دليل التشغيل السريع
    python -m pip install -r requirements-dev.txt
    Copy-Item .env.example .env
    python -m uvicorn backend.main:app --env-file .env --host 127.0.0.1 --port 8000
-4) افتح http://127.0.0.1:8000/ui
+4) افتح http://127.0.0.1:8000؛ سيحوّلك العنوان إلى الواجهة
 5) لتشغيل الاختبارات في نافذة PowerShell أخرى:
    python -m pytest -q
 

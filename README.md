@@ -25,7 +25,7 @@ Copy-Item .env.example .env
 python -m uvicorn backend.main:app --env-file .env --host 127.0.0.1 --port 8000
 ```
 
-Open <http://127.0.0.1:8000/ui>. API documentation is at <http://127.0.0.1:8000/docs> and health is at <http://127.0.0.1:8000/health>.
+Open <http://127.0.0.1:8000/>; the root address redirects directly to the web interface. API documentation is at <http://127.0.0.1:8000/docs> and health is at <http://127.0.0.1:8000/health>.
 
 Assessment history is stored in `data/rasd.sqlite3` by default. Keep this file private and include it in your backup routine. Override the location with `RASD_DATABASE_PATH`.
 
@@ -55,7 +55,7 @@ The service is bound to `127.0.0.1:8000`, and Compose stores database files in t
 
 1. Push the project to a GitHub repository. Do not commit `.env`, the `data` directory, or database files.
 2. In Render, create a **Blueprint** and connect that repository. Render reads the service configuration from `render.yaml`.
-3. After deployment, open the `onrender.com` URL with `/ui` appended and run an assessment in a private browser window.
+3. After deployment, open the `onrender.com` URL directly; it redirects to the interface. Run an assessment in a private browser window.
 4. Add the demo URL to LinkedIn only after confirming `/health` reports `demo_mode: true` and `storage: disabled`, and `/docs` is unavailable.
 
 Render's free web services spin down after 15 minutes without traffic, and the first request after idle can take about a minute to wake the service. Their local filesystem is ephemeral and is cleared on restarts, so this setup is for a portfolio demo, not operational data or production use.
@@ -65,7 +65,7 @@ Render's free web services spin down after 15 minutes without traffic, and the f
 | Method | Path | Purpose |
 | --- | --- | --- |
 | `GET` | `/health` | API and database health |
-| `POST` | `/analyze-risk` | Validate, score, and persist an assessment |
+| `POST` | `/analyze-risk` | Validate and score an assessment; persistence is enabled only in local mode |
 | `GET` | `/assessments?limit=50&offset=0` | Page through saved assessments |
 | `GET` | `/assessments/summary` | Exact aggregate totals across all saved assessments |
 | `DELETE` | `/assessments` | Permanently clear saved assessments |
