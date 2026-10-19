@@ -27,13 +27,37 @@ assert.match(script, /required_recovery_hours:Number\(\$\("#required"\)\.value\)
 assert.match(script, /base:window\.location\.protocol==="file:"\?"http:\/\/127\.0\.0\.1:8000":window\.location\.origin/);
 assert.match(script, /data\.demo_mode===true/);
 assert.match(script, /Public portfolio demo: use fictional information only/);
-assert.match(script, /if\(S\.demoMode\)all\.push\(\.\.\.S\.items\.map/);
+assert.match(script, /if\(S\.demoMode\)all\.push\(\.\.\.S\.demoItems\.map/);
+assert.match(script, /if\(S\.demoMode\)S\.demoItems\.unshift\(item\)/);
 
+const paginationContext = vm.createContext({
+  S: {
+    demoMode: true,
+    demoItems: Array.from({ length: 52 }, (_, index) => ({ id: index })),
+    items: [],
+    recent: [],
+    total: 0,
+    offset: 0,
+    pageSize: 50,
+    last: null,
+  },
+  update() {},
+  renderResult() {},
+});
 const functionLine = (name) => {
   const start = script.indexOf(`function ${name}(`);
   assert.notEqual(start, -1, `${name} must exist`);
   return script.slice(start, script.indexOf("\n", start));
 };
+vm.runInContext(`async ${functionLine("loadHistory")}`, paginationContext);
+await vm.runInContext("loadHistory(50)", paginationContext);
+assert.equal(paginationContext.S.total, 52);
+assert.equal(paginationContext.S.offset, 50);
+assert.equal(paginationContext.S.items.length, 2);
+assert.equal(paginationContext.S.items[0].id, 50);
+await vm.runInContext("loadHistory(100)", paginationContext);
+assert.equal(paginationContext.S.offset, 50, "demo pagination must clamp to the final page");
+
 const sandbox = {
   Number,
   String,
@@ -114,9 +138,9 @@ assert.deepEqual(
   "older responses with only a single recommendation must still render",
 );
 
-console.log("Frontend checks passed: syntax, structure, western digits, bounds, steppers, numeric payloads, and recommendation rendering.");
-
 assert.match(html, /id="historyReadiness"/);
 assert.match(html, /id="retentionDescription"/);
 assert.match(script, /No visitor assessments are saved on the server/);
 assert.match(script, /Temporary only; no visitor data is saved on the server/);
+
+console.log("Frontend checks passed: syntax, structure, western digits, bounds, steppers, numeric payloads, demo pagination, and recommendation rendering.");
