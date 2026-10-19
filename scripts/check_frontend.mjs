@@ -115,3 +115,8 @@ assert.deepEqual(
 );
 
 console.log("Frontend checks passed: syntax, structure, western digits, bounds, steppers, numeric payloads, and recommendation rendering.");
+
+assert.match(html, /id="historyReadiness"/);
+assert.match(html, /id="retentionDescription"/);
+assert.match(script, /No visitor assessments are saved on the server/);
+assert.match(script, /Temporary only; no visitor data is saved on the server/);
