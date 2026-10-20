@@ -17,7 +17,7 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
@@ -126,6 +126,67 @@ class HealthResult(BaseModel):
     version: str
     storage: Literal["available", "disabled"]
     demo_mode: bool
+
+
+MAX_REQUEST_BODY_BYTES = 16 * 1024
+
+
+class RequestBodyLimitMiddleware:
+    """Reject oversized API request bodies before JSON parsing."""
+
+    def __init__(self, app, max_body_bytes: int = MAX_REQUEST_BODY_BYTES):
+        self.app = app
+        self.max_body_bytes = max_body_bytes
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http" or scope["method"] not in {"POST", "PUT", "PATCH"}:
+            await self.app(scope, receive, send)
+            return
+
+        headers = dict(scope.get("headers", []))
+        raw_content_length = headers.get(b"content-length")
+        if raw_content_length is not None:
+            try:
+                content_length = int(raw_content_length)
+            except ValueError:
+                response = JSONResponse(
+                    status_code=400,
+                    content={"detail": "Invalid Content-Length header."},
+                )
+                await response(scope, receive, send)
+                return
+            if content_length > self.max_body_bytes:
+                response = JSONResponse(
+                    status_code=413,
+                    content={"detail": "Request body exceeds the 16 KiB limit."},
+                )
+                await response(scope, receive, send)
+                return
+
+        messages = []
+        received = 0
+        while True:
+            message = await receive()
+            if message["type"] == "http.disconnect":
+                return
+            received += len(message.get("body", b""))
+            if received > self.max_body_bytes:
+                response = JSONResponse(
+                    status_code=413,
+                    content={"detail": "Request body exceeds the 16 KiB limit."},
+                )
+                await response(scope, receive, send)
+                return
+            messages.append(message)
+            if not message.get("more_body", False):
+                break
+
+        async def replay_body():
+            if messages:
+                return messages.pop(0)
+            return await receive()
+
+        await self.app(scope, replay_body, send)
 
 
 @contextmanager
@@ -498,6 +559,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
     allow_headers=["Accept", "Content-Type"],
 )
+app.add_middleware(RequestBodyLimitMiddleware)
 
 
 @app.middleware("http")

@@ -41,6 +41,8 @@ python -m pytest -q
 - `DELETE /assessments`: مسح السجل المحفوظ نهائيًا.
 - `GET /docs`: توثيق OpenAPI التفاعلي.
 
+ترفض API أي طلب يتجاوز جسمه 16 KiB قبل تحليل بياناته.
+
 ## Docker Compose
 
 ```powershell

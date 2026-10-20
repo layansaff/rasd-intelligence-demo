@@ -190,6 +190,15 @@ def test_fractional_json_numbers_are_not_coerced(client, valid_request):
     assert response.status_code == 422
 
 
+def test_request_body_size_is_limited(client):
+    response = client.post(
+        "/analyze-risk",
+        content=b"x" * (main.MAX_REQUEST_BODY_BYTES + 1),
+        headers={"Content-Type": "application/json"},
+    )
+    assert response.status_code == 413
+
+
 def test_history_pagination_and_delete(client, valid_request):
     for index in range(3):
         payload = {**valid_request, "supplier_name": f"Supplier {index}"}

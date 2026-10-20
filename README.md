@@ -74,6 +74,8 @@ Render's free web services spin down after 15 minutes without traffic, and the f
 
 `POST /analyze-risk` rejects unknown fields, numeric strings, fractions, and values outside the documented limits. Recovery hours must be an integer from 0 through 8760; required recovery hours must be an integer from 1 through 8760.
 
+The API rejects request bodies larger than 16 KiB before parsing them.
+
 ## Scoring method
 
 Dimension values are configuration choices for a demonstration, not calibrated probabilities:
