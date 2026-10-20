@@ -39,7 +39,7 @@ python -m pytest -q
 
 Tests use temporary SQLite databases and do not modify the default application data file.
 
-Continuous integration runs the same test suite on every push and pull request.
+Continuous integration runs the same test suite and a known-vulnerability audit of Python dependencies on every push and pull request. Dependabot checks Python packages and GitHub Actions weekly and proposes updates as pull requests.
 
 ## Run with Docker Compose
 
