@@ -18,6 +18,8 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: requirements-dev.txt
+      - name: Upgrade pip to a patched release
+        run: python -m pip install --upgrade "pip>=26.2,<27"
       - name: Install test dependencies
         run: python -m pip install -r requirements-dev.txt
       - name: Run API tests
@@ -39,6 +41,11 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Upgrade pip to a patched release
+        run: python -m pip install --upgrade "pip>=26.2,<27"
       - name: Audit Python dependencies for known vulnerabilities
         uses: pypa/gh-action-pip-audit@v1.1.0
         with:

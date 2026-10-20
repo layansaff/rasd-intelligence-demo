@@ -7,7 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 COPY requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt \
+RUN python -m pip install --no-cache-dir --upgrade "pip>=26.2,<27" \
+    && python -m pip install --no-cache-dir -r requirements.txt \
     && groupadd --system --gid 10001 rasd \
     && useradd --system --uid 10001 --gid rasd --home-dir /app rasd \
     && mkdir -p /app/data \
