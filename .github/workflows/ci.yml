@@ -33,3 +33,13 @@ jobs:
           node-version: 22
       - name: Check frontend
         run: node scripts/check_frontend.mjs
+
+  dependency-audit:
+    timeout-minutes: 10
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Audit Python dependencies for known vulnerabilities
+        uses: pypa/gh-action-pip-audit@v1.1.0
+        with:
+          inputs: requirements-dev.txt
