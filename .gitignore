@@ -5,6 +5,9 @@ __pycache__/
 .env
 data/
 zip-check/
+/.tmp-pip-audit/
+/.pytest-audit-temp/
+/work/
 *.sqlite3
 *.sqlite3-shm
 *.sqlite3-wal
