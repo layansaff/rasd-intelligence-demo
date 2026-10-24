@@ -51,7 +51,7 @@ The service is bound to `127.0.0.1:8000`, and Compose stores database files in t
 
 ## Public portfolio demo on Render
 
-`render.yaml` defines a free web service in Frankfurt. It enables `RASD_DEMO_MODE=true`: the API still calculates assessments, but it does not create a database or store visitor assessments on the server, and it disables API documentation. Each visitor's result and history are temporary in that browser session. Use fictional information only; do not enter real supplier or personal data.
+`render.yaml` defines a free web service in Frankfurt. `.python-version` keeps Render on Python 3.14, and CI checks the API on both Python 3.12 and 3.14. It enables `RASD_DEMO_MODE=true`: the API still calculates assessments, but it does not create a database or store visitor assessments on the server, and it disables API documentation. Each visitor's result and history are temporary in that browser session. Use fictional information only; do not enter real supplier or personal data.
 
 1. Push the project to a GitHub repository. Do not commit `.env`, the `data` directory, or database files.
 2. In Render, create a **Blueprint** and connect that repository. Render reads the service configuration from `render.yaml`.
