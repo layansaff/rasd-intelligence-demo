@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">RASD Intelligence system architecture</title>
+  <desc id="desc">Browser interface sends assessments to a FastAPI service for validation and rules-based scoring. The public Render demo keeps data in the browser session; local mode can persist assessments in SQLite. GitHub Actions runs API, frontend, and dependency checks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071B35"/><stop offset="1" stop-color="#102D4E"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".2"/></filter>
+    <style>
+      .title{font:700 30px system-ui,-apple-system,Segoe UI,sans-serif;fill:#F4F8FC}.sub{font:400 15px system-ui,-apple-system,Segoe UI,sans-serif;fill:#A9BED1}.label{font:700 12px system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:1.3px;fill:#67DCC8}.cardtitle{font:700 18px system-ui,-apple-system,Segoe UI,sans-serif;fill:#F4F8FC}.body{font:400 14px system-ui,-apple-system,Segoe UI,sans-serif;fill:#C3D3E1}.small{font:600 12px system-ui,-apple-system,Segoe UI,sans-serif;fill:#B7CADD}.arrow{stroke:#75D8CE;stroke-width:2.5;fill:none}.chip{font:600 11px system-ui,-apple-system,Segoe UI,sans-serif;fill:#DCE9F5}
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#75D8CE"/></marker>
+  </defs>
+  <rect width="1200" height="560" rx="26" fill="url(#bg)"/>
+  <circle cx="1050" cy="70" r="180" fill="#1D5271" opacity=".12"/>
+  <text x="64" y="66" class="label">RASD INTELLIGENCE · SYSTEM OVERVIEW</text>
+  <text x="64" y="108" class="title">From supplier inputs to explainable actions</text>
+  <text x="64" y="137" class="sub">A small, privacy-conscious portfolio demo with separate local persistence mode.</text>
+  <g filter="url(#shadow)">
+    <rect x="64" y="184" width="300" height="194" rx="18" fill="#102A47" stroke="#2B4D6A"/>
+    <rect x="450" y="184" width="300" height="194" rx="18" fill="#102A47" stroke="#2B4D6A"/>
+    <rect x="836" y="184" width="300" height="194" rx="18" fill="#102A47" stroke="#2B4D6A"/>
+  </g>
+  <path d="M374 280h64" class="arrow" marker-end="url(#arrowhead)"/><path d="M760 280h64" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="88" y="220" class="label">01 · EXPERIENCE</text><text x="88" y="254" class="cardtitle">Browser interface</text><text x="88" y="282" class="body">Responsive HTML, CSS and JavaScript</text><text x="88" y="307" class="body">Bounded inputs and clear explanations</text><rect x="88" y="335" width="104" height="24" rx="12" fill="#1A405A"/><text x="102" y="351" class="chip">User session</text>
+  <text x="474" y="220" class="label">02 · SERVICE</text><text x="474" y="254" class="cardtitle">FastAPI backend</text><text x="474" y="282" class="body">Pydantic validation and safe bounds</text><text x="474" y="307" class="body">Explainable deterministic scoring</text><rect x="474" y="335" width="120" height="24" rx="12" fill="#1A405A"/><text x="488" y="351" class="chip">Health endpoint</text>
+  <text x="860" y="220" class="label">03 · RESULT</text><text x="860" y="254" class="cardtitle">Risk &amp; continuity view</text><text x="860" y="282" class="body">Risk factors, recovery gap, actions</text><text x="860" y="307" class="body">Transparent demo model limitations</text><rect x="860" y="335" width="132" height="24" rx="12" fill="#1A405A"/><text x="874" y="351" class="chip">Review required</text>
+  <rect x="64" y="416" width="514" height="92" rx="16" fill="#0E2440" stroke="#284563"/><text x="88" y="448" class="label">PUBLIC DEMO · RENDER</text><text x="88" y="478" class="body">Stateless server · temporary browser-session results · fictional data only</text>
+  <rect x="600" y="416" width="536" height="92" rx="16" fill="#0E2440" stroke="#284563"/><text x="624" y="448" class="label">LOCAL MODE · OPTIONAL</text><text x="624" y="478" class="body">SQLite history · Docker Compose · local development</text>
+  <text x="64" y="536" class="small">CI: Python 3.12 + 3.14 · frontend checks · Python dependency audit</text>
+</svg>
