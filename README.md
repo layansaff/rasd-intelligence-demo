@@ -1,17 +1,33 @@
 # RASD Intelligence
 
-A local-first supplier risk assessment and business continuity prototype. It includes a responsive web interface, a validated FastAPI service, and persistent SQLite assessment history.
+**Supplier risk and business continuity, made easier to explain.**
+
+[![CI](https://github.com/layansaff/rasd-intelligence-demo/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/layansaff/rasd-intelligence-demo/actions/workflows/ci.yml) · [Open the live demo](https://rasd-intelligence-demo.onrender.com/ui) · [العربية](README.ar.md)
+
+RASD Intelligence is a portfolio project that turns supplier disruption inputs into a structured, explainable risk assessment. It combines a responsive browser interface with a validated FastAPI backend and a transparent rules-based scoring model.
+
+> **Demo:** [rasd-intelligence-demo.onrender.com/ui](https://rasd-intelligence-demo.onrender.com/ui). The public version is intentionally stateless: visitor assessments are not saved on the server. Use fictional data only.
 
 > **Decision-use notice:** The score is a deterministic, preliminary rules-based estimate. It has not been validated against operational loss data, and it must not be used as the sole basis for supplier approval, insurance, lending, or other consequential decisions. A qualified reviewer must assess the result and its assumptions.
 
-## What is included
+![RASD Intelligence architecture](docs/architecture.svg)
 
-- Supplier disruption assessment with explicit input bounds and a factor-by-factor explanation.
-- A weighted residual risk score, inherent risk score, recovery gap, and actionable recommendations.
-- Persistent assessment history stored in a local SQLite database.
-- Health, assessment, history, and history-clear API endpoints, documented through OpenAPI at `/docs`.
-- Configurable CORS for explicitly approved frontend origins, basic browser security headers, and a non-root Docker image.
-- Automated API, validation, scoring, persistence, and history tests.
+## Project at a glance
+
+| | |
+| --- | --- |
+| **Problem** | Make supplier disruption exposure and recovery readiness easier to assess and communicate. |
+| **Approach** | Validate bounded inputs, show the factors behind a deterministic score, and connect findings to continuity actions. |
+| **Stack** | HTML, CSS, JavaScript, Python, FastAPI, Pydantic, SQLite, Docker, GitHub Actions, and Render. |
+| **Deployment** | Public portfolio demo with server-side storage disabled; local mode supports SQLite assessment history. |
+
+## What it demonstrates
+
+- A responsive risk assessment workflow with explicit input bounds and factor-by-factor explanations.
+- Inherent and residual risk scores, recovery gap, risk bands, and practical recommendations.
+- A FastAPI service with strict request validation, a 16 KiB request-body limit, health checks, and security headers.
+- Two deployment modes: privacy-focused stateless public demo and local SQLite-backed prototype.
+- Docker Compose, non-root container execution, API and frontend checks, Python-version CI, and dependency auditing.
 
 ## Run locally
 
@@ -91,6 +107,10 @@ Dimension values are configuration choices for a demonstration, not calibrated p
 - Risk bands: low 0–39, medium 40–69, high 70–100.
 
 The organization using this prototype must approve the dimensions, weights, adjustments, thresholds, and recommendations before operational use. No statistical calibration, back-testing, bias review, or independent model validation is included.
+
+## Portfolio notes
+
+See [docs/portfolio-kit.md](docs/portfolio-kit.md) for a concise project brief, a short demo walkthrough, and draft LinkedIn copy. The project is intended to demonstrate product thinking and full-stack implementation; its scoring model is illustrative and is not a validated risk model.
 
 ## Security and production boundaries
 
